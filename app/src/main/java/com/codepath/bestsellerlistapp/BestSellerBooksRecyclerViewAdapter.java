@@ -3,10 +3,12 @@ package com.codepath.bestsellerlistapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.bestsellerlistapp.models.BestSellerBook;
 
 import java.util.List;
@@ -35,8 +37,14 @@ public class BestSellerBooksRecyclerViewAdapter extends RecyclerView.Adapter<Bes
     @Override
     public void onBindViewHolder(final BookViewHolder holder, int position) {
         holder.mItem = books.get(position);
+        String ranking = String.format("%d", BestSellerBook.rank);
         holder.mBookTitle.setText(books.get(position).title);
         holder.mBookAuthor.setText(books.get(position).author);
+        BestSellerBook bestSellerBook = books.get(position);
+        Glide.with(holder.mView)
+                .load(bestSellerBook.bookImageUrl)
+                .centerInside()
+                .into(holder.mBookImage);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +68,7 @@ public class BestSellerBooksRecyclerViewAdapter extends RecyclerView.Adapter<Bes
         public final TextView mBookTitle;
         public final TextView mBookAuthor;
         public BestSellerBook mItem;
+        public ImageView mBookImage;
 
         public BookViewHolder(View view) {
             super(view);
